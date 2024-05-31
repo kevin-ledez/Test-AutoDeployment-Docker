@@ -1,0 +1,26 @@
+services:
+    database:
+        container_name: database
+        image: mysql:latest
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: appdb
+        ports:
+            - 3306
+        volumes:
+            - db-data:/var/lib/mysql
+        healthcheck:
+            interval: 10s
+            timeout: 5s
+            retries: 3
+    phpmyadmin:
+      container_name: phpmyadmin
+      image: phpmyadmin:latest
+      restart: always
+      ports:
+          - 8001:80
+      environment:
+          - PMA_HOST=database
+volumes:
+    db-data:
