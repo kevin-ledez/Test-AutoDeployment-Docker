@@ -1,26 +1,15 @@
 services:
-    database:
-        container_name: database
-        image: mysql:latest
-        restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: appdb
-        ports:
-            - 3306
-        volumes:
-            - db-data:/var/lib/mysql
-        healthcheck:
-            interval: 10s
-            timeout: 5s
-            retries: 3
-    phpmyadmin:
-      container_name: phpmyadmin
-      image: phpmyadmin:latest
+    client:
+      container_name: frontend-client
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+        # tags:
+        #   - "nalius/nalius:client"
       restart: always
       ports:
-          - 8001:80
-      environment:
-          - PMA_HOST=database
+        - 4200:4200
+      volumes:
+        - ./client/:/app:cached
 volumes:
-    db-data:
+  db-data:
