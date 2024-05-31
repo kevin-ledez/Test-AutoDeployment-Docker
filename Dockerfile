@@ -1,9 +1,9 @@
-# Stage 1
-FROM node:lts as node
+FROM node:lts
+
+RUN npm install -g npm@latest @angular/cli
+
+RUN chmod +x /scripts.sh
+
 WORKDIR /app
-RUN npm install
-COPY ["./", "./"]
-RUN npm run build
-# Stage 2
-FROM nginx:alpine
-COPY --from=node /app/dist/client /usr/share/nginx/html
+
+ENTRYPOINT ["sh", "./scripts.sh"]
