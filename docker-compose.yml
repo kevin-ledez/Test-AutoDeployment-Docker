@@ -5,7 +5,7 @@ services:
         context: .
         dockerfile: ./Dockerfile
         # tags:
-        #   - "nalius/nalius:client"
+        #   - "nalius/nalius:test-auto-deploy"
       restart: always
       ports:
         - 4200:4200
