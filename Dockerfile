@@ -1,13 +1,24 @@
-FROM node:18-alpine
+FROM node:18 AS build
 
 WORKDIR /app
 
-COPY . /usr/src/app
-
-ADD package*.json ./
-
-RUN npm install -g @angular/cli
+COPY package*.json ./
 
 RUN npm install
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+RUN npm install -g @angular/cli
+
+COPY . .
+
+RUN npm run build --prod
+
+FROM nginx:alpine
+
+COPY --from=build /app/dist/mon-app-angular /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 4200
+
+
+CMD ["nginx", "-g", "daemon off;"]
