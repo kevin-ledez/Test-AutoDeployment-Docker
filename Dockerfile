@@ -6,4 +6,4 @@ RUN npm run build
 
 WORKDIR /app
 
-ENTRYPOINT ["sh", "./scripts.sh"]
+# ENTRYPOINT ["sh", "./scripts.sh"]
