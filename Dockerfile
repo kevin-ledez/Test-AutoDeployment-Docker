@@ -1,9 +1,11 @@
-FROM node:lts
-
-RUN npm install -g npm@latest @angular/cli
-
-RUN chmod +x /scripts.sh
+FROM node:alpine
 
 WORKDIR /app
 
-ENTRYPOINT ["sh","/scripts.sh"]
+COPY . /usr/src/app
+
+RUN npm install -g @angular/cli
+
+RUN npm install
+
+CMD ["ng", "serve", "--host", "0.0.0.0"]
