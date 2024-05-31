@@ -2,8 +2,7 @@ FROM node:lts
 
 RUN npm install -g npm@latest @angular/cli
 
-
-COPY scripts.sh ./scripts.sh
+RUN chmod +x scripts.sh
 
 WORKDIR /app
 
