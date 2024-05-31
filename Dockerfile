@@ -8,5 +8,4 @@ COPY ["./", "./"]
 RUN npm run build
 # Stage 2
 FROM nginx:alpine
-COPY ["nginx.conf", "/etc/nginx/conf.d/default.conf"]
 COPY --from=node /app/dist/client /usr/share/nginx/html
