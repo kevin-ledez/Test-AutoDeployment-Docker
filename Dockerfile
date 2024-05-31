@@ -1,9 +1,9 @@
-FROM node:lts
-
-RUN npm install -g npm@latest @angular/cli
-
+# Stage 1
+FROM node:lts as node
 WORKDIR /app
-
-CMD [ "ng", "serve" ]
-
-# ENTRYPOINT ["sh", "./scripts.sh"]
+COPY . .
+RUN npm install
+RUN npm run bluild -- prod
+# Stage 2
+FROM nginx:alpine
+COPY --from=node /app/dist/client /usr/share/nginx/html
