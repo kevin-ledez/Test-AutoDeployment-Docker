@@ -6,4 +6,4 @@ RUN chmod +x /scripts.sh
 
 WORKDIR /app
 
-ENTRYPOINT ["sh", "./scripts.sh"]
+ENTRYPOINT ["sh","/scripts.sh"]
