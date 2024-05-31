@@ -7,4 +7,4 @@ RUN ng build
 # Stage 2
 FROM nginx:alpine
 COPY --from=node /app/dist/client /usr/share/nginx/html
-EXPOSE 4200
+CMD ["ng","serve","--host", "0.0.0.0"]
