@@ -1,8 +1,21 @@
-# Utiliser l'image Node.js pour la phase de build
-FROM node:18 AS build
+FROM node:lts-alpine3.19 AS build
 
-# Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Exposer le port 80
+COPY ./src/package*.json ./
+
+RUN npm ci
+
+RUN npm install -g @angular/cli
+
+COPY ./src .
+
+RUN npm run build --configuration=production
+
+FROM nginx:1.24-alpine 
+
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=build /app/dist/src/browser /usr/share/nginx/html
+
 EXPOSE 4200

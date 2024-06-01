@@ -1,15 +1,7 @@
 services:
-    client:
-      container_name: frontend-client
-      build:
-        context: .
-        dockerfile: ./Dockerfile
-        # tags:
-        #   - "nalius/nalius:test-auto-deploy"
-      restart: always
-      ports:
-        - 4200:4200
-      volumes:
-        - ./client/:/app:cached
-volumes:
-  db-data:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
