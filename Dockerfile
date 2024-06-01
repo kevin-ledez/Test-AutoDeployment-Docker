@@ -1,24 +1,32 @@
+# Utiliser l'image Node.js pour la phase de build
 FROM node:18 AS build
 
+# Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-COPY package*.json ./
+# Copier le package.json et le package-lock.json
+COPY package.json package-lock.json ./
 
+# Installer les dépendances
 RUN npm install
 
-RUN npm install -g @angular/cli
-
+# Copier le reste de l'application
 COPY . .
 
+# Construire l'application Angular
 RUN npm run build --prod
 
+# Utiliser une image Nginx pour la phase de production
 FROM nginx:alpine
 
-COPY --from=build /app/dist/mon-app-angular /usr/share/nginx/html
+# Copier les fichiers build dans le répertoire de Nginx
+COPY --from=build /app/dist/client /usr/share/nginx/html
 
+# Copier le fichier de configuration Nginx personnalisé
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# Exposer le port
 EXPOSE 4200
 
-
+# Commande pour démarrer Nginx
 CMD ["nginx", "-g", "daemon off;"]
