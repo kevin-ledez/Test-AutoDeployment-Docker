@@ -21,7 +21,7 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copier les fichiers build dans le répertoire de Nginx
-COPY --from=build /app/dist/client /usr/share/nginx/html
+COPY --from=build /app/client /usr/share/nginx/html
 
 # Copier le fichier de configuration Nginx personnalisé
 COPY nginx.conf /etc/nginx/nginx.conf
