@@ -5,7 +5,8 @@ FROM node:18 AS build
 WORKDIR /app
 
 # Copier le package.json et le package-lock.json
-COPY package.json package-lock.json ./
+COPY package.json ./
+COPY package-lock.json ./
 
 # Installer les dépendances
 RUN npm install
@@ -25,7 +26,7 @@ COPY --from=build /app/dist/client /usr/share/nginx/html
 # Copier le fichier de configuration Nginx personnalisé
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Exposer le port
+# Exposer le port 80
 EXPOSE 4200
 
 # Commande pour démarrer Nginx
