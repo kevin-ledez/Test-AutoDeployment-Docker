@@ -15,3 +15,4 @@ jobs:
           url: '${{ secrets.DOCKER_HUB_TEST_DEPLOY }}'
           method: 'POST'
           preventFailureOnNoResponse: true
+          ignoreSsl: true
