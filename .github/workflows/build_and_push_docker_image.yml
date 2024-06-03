@@ -6,20 +6,12 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  deployment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+      - name: Portainer Webhook pull and redeploy
+        uses: fjogeleit/http-request-action@v1
         with:
-          username: nalius
-          password: ${{ secrets.DOCKER_HUB_TEST_DEPLOY }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: nalius/nalius:test-auto-deploy
+          url: '${{ secrets.DOCKER_HUB_TEST_DEPLOY }}'
+          method: 'POST'
+          preventFailureOnNoResponse: true
